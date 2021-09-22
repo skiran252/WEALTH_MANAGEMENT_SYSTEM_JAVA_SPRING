@@ -30,7 +30,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableTransactionManagement
 @ComponentScan(basePackages = "demo")
 @PropertySource("classpath:persistence-mysql.properties")
-public class ApplicaitonConfig implements WebMvcConfigurer {
+public class ApplicationConfig implements WebMvcConfigurer {
 
 	@Autowired
 	private Environment env;

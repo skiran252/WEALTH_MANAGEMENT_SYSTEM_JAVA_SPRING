@@ -11,7 +11,7 @@ public class MvcDispatcherServletInitializer extends AbstractAnnotationConfigDis
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		return new Class[] { ApplicaitonConfig.class };
+		return new Class[] { ApplicationConfig.class };
 	}
 
 	@Override
