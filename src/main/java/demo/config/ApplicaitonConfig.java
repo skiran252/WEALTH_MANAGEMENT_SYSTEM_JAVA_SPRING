@@ -18,6 +18,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -26,6 +27,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebMvc
+@EnableTransactionManagement
 @ComponentScan(basePackages = "demo")
 @PropertySource("classpath:persistence-mysql.properties")
 public class ApplicaitonConfig implements WebMvcConfigurer {
@@ -62,17 +64,17 @@ public class ApplicaitonConfig implements WebMvcConfigurer {
 		Properties props = new Properties();
 		props.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
 		props.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+		props.setProperty("hibernate.hbm2ddl.auto",env.getProperty("hibernate.hbm2ddl.auto"));
 		return props;
 	}
 
 	@Bean
 	public LocalSessionFactoryBean sessionFactory() throws SQLException {
-		// create session factorys
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-		// set the properties
 		sessionFactory.setDataSource(securityDataSource());
 		sessionFactory.setPackagesToScan(env.getProperty("hibernate.packagesToScan"));
 		sessionFactory.setHibernateProperties(getHibernateProperties());
+		
 		return sessionFactory;
 	}
 
@@ -80,6 +82,7 @@ public class ApplicaitonConfig implements WebMvcConfigurer {
 	@Autowired
 	public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
 		// setup transaction manager based on session factory
+		System.out.println(sessionFactory.toString());
 		HibernateTransactionManager txManager = new HibernateTransactionManager();
 		txManager.setSessionFactory(sessionFactory);
 		return txManager;
@@ -103,5 +106,4 @@ public class ApplicaitonConfig implements WebMvcConfigurer {
 		registry.addResourceHandler("/css/**").addResourceLocations("/css/");
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 	}
-
 }

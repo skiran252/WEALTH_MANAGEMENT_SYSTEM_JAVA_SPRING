@@ -1,11 +1,16 @@
 package demo.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
+@Entity
 @Table(name="users")
 public class User {
 
-	private String username, password;
+	@Id
+	private String username;
+	private String password;
 	private String firstName, lastName;
 	private String address, phone;
 	private double balance;

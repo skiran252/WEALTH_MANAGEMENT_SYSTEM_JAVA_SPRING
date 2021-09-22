@@ -48,6 +48,19 @@
 									<div class="alert alert-success text-center">You've been
 										successfully logged out!</div>
 								</c:if>
+								
+								<c:if test="${created!=null}">
+									<div class="alert alert-success text-center">
+									USER CREATED PLEASE LOGIN
+									</div>
+								</c:if>
+								
+								<c:if test="${duplicateuser!=null}">
+									<div class="alert alert-danger text-center">
+									USER ALREADY EXISTS PLEASE LOGIN
+									</div>
+								</c:if>
+								
 								<c:if test="${param.error!=null}">
 									<div class="alert alert-danger">Sorry! You Entered
 										invalid username/password</div>

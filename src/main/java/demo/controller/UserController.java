@@ -1,14 +1,19 @@
 package demo.controller;
 
+import demo.model.Authority;
+import demo.dao.AuthorityDaoimpl;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import demo.dao.UserDaoImpl;
@@ -17,6 +22,12 @@ import demo.model.User;
 @Controller
 public class UserController {
 	private Logger logger = Logger.getLogger(getClass().getName());
+
+	@Autowired
+	private UserDaoImpl userdao;
+
+	@Autowired
+	private AuthorityDaoimpl authoritydao;
 
 	@GetMapping("/signin")
 	public String showMyLoginPage() {
@@ -30,19 +41,17 @@ public class UserController {
 		return mav;
 	}
 
-	@PostMapping("/register/save")
+	@Transactional
+	@RequestMapping(value = "/register/save", method = RequestMethod.POST)
 	public ModelAndView registerUser(HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute("user") User user) {
 		ModelAndView mav = null;
-		try {
-			UserDaoImpl userDaoImpl = new UserDaoImpl();
-			userDaoImpl.save(user);
-			return new ModelAndView("home", "firstname", user.getFirstName());
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.info(e.getMessage());
-			mav = new ModelAndView("register");
-			mav.addObject("message", "Username already exists!!");
+		int notexists = userdao.save(user);
+		if (notexists == 1) {
+			authoritydao.save(new Authority(user.getUsername(), "ROLE_USER"));
+			return new ModelAndView("login", "created", "user created please login");
+		} else {
+			mav = new ModelAndView("login", "duplicateuser", "Username already exists!!");
 			return mav;
 		}
 	}

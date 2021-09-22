@@ -1,7 +1,14 @@
 package demo.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="authorities")
 public class Authority {
 
+	@Id
 	private String username;
 	private String authority = "ROLE_USER";
 
@@ -19,6 +26,12 @@ public class Authority {
 
 	public void setAuthority(String authority) {
 		this.authority = "ROLE_" + authority;
+	}
+
+	public Authority(String username, String authority) {
+		super();
+		this.username = username;
+		this.authority = authority;
 	}
 
 }

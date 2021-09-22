@@ -24,7 +24,7 @@
 	</p>
 
 
-	<security:authorize access="hasRole('MANAGER')">
+	<security:authorize access="hasRole('USER')">
 		<hr>
 		<p>
 			<a href="${pageContext.request.contextPath}/leaders"> LeaderShip
