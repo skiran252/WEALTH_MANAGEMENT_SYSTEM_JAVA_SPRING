@@ -1,5 +1,6 @@
 package demo.controller;
 
+import java.io.Serializable;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
@@ -38,7 +39,6 @@ public class TransactionController {
 	public ModelAndView addTransaction(Principal principal, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("transactionpage");
 		List<Category> categories = categoryDao.findAll();
-		System.out.println(categories);
 		Transaction t = new Transaction();
 		t.setUser(userDao.findUser(principal.getName()));
 		mav.addObject("transaction", t);
@@ -47,15 +47,22 @@ public class TransactionController {
 	}
 
 	@Transactional
-	@GetMapping("/viewtransactions")
-	public ModelAndView addTransactionDB(Principal principal, HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView("transactionpage");
-		List<Category> categories = categoryDao.findAll();
-		System.out.println(categories);
-		Transaction t = new Transaction();
-		t.setUser(userDao.findUser(principal.getName()));
-		mav.addObject("transaction", t);
-		mav.addObject("categories", categories);
+	@PostMapping("/addtransaction")
+	public ModelAndView addTransactionDB(Principal principal, @ModelAttribute Transaction transaction,
+			HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView("home");
+
+		Date date = new Date();
+		transaction.setUser(userDao.findUser(principal.getName()));
+		transaction.setTransactionDate(date);
+		int category_id = Integer.parseInt(transaction.getCategory_name());
+		transaction.setCategory(categoryDao.findCategoryById(category_id));
+		Transaction obj = transactionDao.addTransaction(transaction);
+		if (obj != null) {
+			mav.addObject("message", "Transaction Added Successfully");
+		} else {
+			mav.addObject("error", "cannot add transaction");
+		}
 		return mav;
 	}
 
@@ -65,7 +72,7 @@ public class TransactionController {
 			HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("transactionsviewer");
 		List<Transaction> transactions = transactionDao.findByUser(userDao.findUser(principal.getName()));
-		mav.addObject("transactions",transactions);
+		mav.addObject("transactions", transactions);
 		return mav;
 	}
 }

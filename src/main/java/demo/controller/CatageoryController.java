@@ -22,7 +22,7 @@ public class CatageoryController {
 	CategoryDao categoryDao;
 
 	@GetMapping("/addcategory")
-	public ModelAndView addTransaction(Principal principal,HttpServletRequest request,HttpServletResponse response) {
+	public ModelAndView addCategpry(Principal principal,HttpServletRequest request,HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("addcategory");
 		Category category = new Category();
 		mav.addObject("category",category);
@@ -31,7 +31,7 @@ public class CatageoryController {
 
 	@Transactional
 	@PostMapping("/addcategory")
-	public ModelAndView addTransactionToDB(@ModelAttribute Category category,HttpServletRequest request,HttpServletResponse response) {
+	public ModelAndView addCategpryToDB(@ModelAttribute Category category,HttpServletRequest request,HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("home");
 		
 		Category c= categoryDao.addCategory(category);

@@ -16,31 +16,21 @@
 	<jsp:include page="partials/navbar.jsp" />
 
 
-	<div class="text-center">
+	<div class="container" style="margin-top:15vh;">
 		<div class="text-center">
-			<h1>
-				WElCOME, <span> <security:authentication
-						property="principal.username" />
-				</span>
-			</h1>
-			<form:form action="${pageContext.request.contextPath}/logout"
-				method="POST">
-				<button type="submit" value="Logout">LOG OUT</button>
-			</form:form>
+			<div class="col-md-3 text-center">
+				<c:if test="${message!=null}">
+					<div class="alert alert-success">${message}</div>
+				</c:if>
+				<c:if test="${error!=null}">
+					<div class="alert alert-success">${error}</div>
+				</c:if>
+			</div>
+			<h3>PLEASE CHOOSE BELOW OPERATIONS TO PERFORM</h3>
+			<a class="btn btn-success"
+				href="${pageContext.request.contextPath}/addtransaction"> Add
+				Transaction </a> <a class="btn btn-primary"> View Transactions </a>
 		</div>
-
-		<div class="col-md-3 text-center">
-			<c:if test="${message!=null}">
-				<div class="alert alert-success">${message}</div>
-			</c:if>
-			<c:if test="${error!=null}">
-				<div class="alert alert-success">${error}</div>
-			</c:if>
-		</div>
-		<h3>PLEASE CHOOSE BELOW OPERATIONS TO PERFORM</h3>
-		<a class="btn btn-success"
-			href="${pageContext.request.contextPath}/addtransaction"> Add
-			Transaction </a> <a class="btn btn-primary"> View Transactions </a>
 	</div>
 </body>
 <jsp:include page="partials/jsscripts.jsp" />

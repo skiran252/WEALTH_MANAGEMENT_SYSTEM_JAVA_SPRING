@@ -15,17 +15,7 @@
 <body>
 	<jsp:include page="partials/navbar.jsp" />
 
-	<div class="text-center">
-		<h1>
-			WElCOME, <span> <security:authentication
-					property="principal.username" />
-			</span>
-		</h1>
-		<form:form action="${pageContext.request.contextPath}/logout"
-			method="POST">
-			<button type="submit" value="Logout">LOG OUT</button>
-		</form:form>
-	</div>
+	
 
 	<div class="col-md-3 text-center">
 		<c:if test="${message!=null}">
@@ -35,11 +25,11 @@
 			<div class="alert alert-success">${error}</div>
 		</c:if>
 	</div>
-	<div class="container text-center" style="margin-top;2vh;">
+	<div class="container text-center" style="margin-top;15vh;">
 		<h3>TRANSACTIONS</h3>
 
 
-		<table class="table table-striped">
+		<table class="table table-striped border border-light">
 			<thead>
 				<tr>
 					<th scope="col">#</th>

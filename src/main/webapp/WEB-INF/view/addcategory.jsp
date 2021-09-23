@@ -11,23 +11,11 @@
 <title>ADD A NEW TRANSACTION</title>
 <jsp:include page="partials/bootstrap.jsp" />
 <jsp:include page="partials/style.jsp" />
-
 </head>
-<body class="bg-light ">
+<body >
 	<jsp:include page="partials/navbar.jsp" />
-	<div class="container">
+	<div class="container" style="margin-top:15vh;">
 		<div>
-			<div class="text-center">
-				<h1>
-					WElCOME, <span> <security:authentication
-							property="principal.username" />
-					</span>
-				</h1>
-				<form:form action="${pageContext.request.contextPath}/logout"
-					method="POST">
-					<button type="submit" value="Logout">LOG OUT</button>
-				</form:form>
-			</div>
 			<h3>PLEASE ADD A NEW CATEGORY HERE</h3>
 		</div>
 
