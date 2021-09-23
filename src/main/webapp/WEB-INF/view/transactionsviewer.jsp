@@ -43,11 +43,13 @@
 
 				<c:forEach var="transaction" items="${transactions}"
 					varStatus="loop">
+					<tr>
 					<th scope="row">${loop.index}</th>
 					<td>${transaction.getTransactionDate().toLocaleString()}</td>
 					<td>${transaction.getNote()}</td>
 					<td>${transaction.getAmount()}</td>
 					<td>${transaction.getCategory().getTitle()}</td>
+					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
