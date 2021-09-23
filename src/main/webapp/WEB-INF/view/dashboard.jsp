@@ -17,7 +17,6 @@
 Gson gsonObj = new Gson();
 Map<Object, Object> map = null;
 List<Map<Object, Object>> list = new ArrayList<Map<Object, Object>>();
-
 double income = (Double) pageContext.getAttribute("income");
 double expense = (Double) pageContext.getAttribute("expense");
 double total = income + expense;
@@ -102,7 +101,6 @@ String dataPoints = gsonObj.toJson(list);
 
 <script type="text/javascript">
 	window.onload = function() {
-
 		var chart = new CanvasJS.Chart("chartContainer", {
 			theme : "light2",
 			animationEnabled : true,
@@ -121,9 +119,7 @@ String dataPoints = gsonObj.toJson(list);
 <%out.print(dataPoints);%>
 	} ]
 		});
-
 		chart.render();
-
 	}
 </script>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
