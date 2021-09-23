@@ -13,20 +13,20 @@ uri="http://www.springframework.org/security/tags"%>
   </head>
   <body>
     <jsp:include page="partials/navbar.jsp" />
-    <div class="container" style="margin-top: 15vh;">
+    <div class="container" style="margin-top: 15vh">
       <div>
         <h3>PLEASE ADD A NEW TRANSACTION HERE</h3>
       </div>
 
       <div class="row">
-        <div class="col-md-4 bg-iight">
+        <div class="col-md-4 bg-iight align-items-center">
           <form:form
             action="${pageContext.request.contextPath}/addtransaction"
             modelAttribute="transaction"
             method="POST"
           >
             <div class="form-group">
-              <label for="amount">Transaction Amount:</label>
+              <label for="amount">Transaction Amount</label>
               <form:input
                 path="amount"
                 type="text"
@@ -37,8 +37,8 @@ uri="http://www.springframework.org/security/tags"%>
               />
             </div>
 
-            <div class="form-group">
-              <label for="note">Email address</label>
+            <div class="form-group mt-2">
+              <label for="note">Description</label>
               <form:input
                 path="note"
                 type="text"
@@ -48,10 +48,9 @@ uri="http://www.springframework.org/security/tags"%>
                 placeholder="transaction for why?"
               />
             </div>
-            <div class="form-group">
+            <div class="form-group  mt-2">
               <label for="category">Category</label>
               <select
-                path="category_name"
                 name="category_name"
                 class="form-control"
                 id="category_name"
@@ -61,7 +60,20 @@ uri="http://www.springframework.org/security/tags"%>
                 </c:forEach>
               </select>
             </div>
-            <button class="submit" type="submit">Add Transaction</button>
+            <div class="form-group mt-2">
+              <label for="transaction_type">Category</label>
+              <select
+                name="transaction_type"
+                class="form-control custom-select"
+                id="transaction_type"
+              >
+                <option value="expense">Exepense</option>
+                <option value="income">Income</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-success mt-3">
+              Add Transaction
+            </button>
           </form:form>
         </div>
       </div>

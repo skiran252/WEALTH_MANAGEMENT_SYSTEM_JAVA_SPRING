@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import demo.dao.AuthorityDaoimpl;
-import demo.dao.UserDaoImpl;
+import demo.dao.UserDao;
 import demo.model.Authority;
 import demo.model.User;
 
@@ -24,7 +24,7 @@ public class UserController {
 	private Logger logger = Logger.getLogger(getClass().getName());
 
 	@Autowired
-	private UserDaoImpl userdao;
+	private UserDao userdao;
 
 	@Autowired
 	private AuthorityDaoimpl authoritydao;
@@ -40,7 +40,7 @@ public class UserController {
 		mav.addObject("user", new User());
 		return mav;
 	}
-	
+
 	@Transactional
 	@RequestMapping(value = "/register/save", method = RequestMethod.POST)
 	public ModelAndView registerUser(HttpServletRequest request, HttpServletResponse response,

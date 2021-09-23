@@ -16,10 +16,10 @@
 
 
 
-
-				<li class="nav-item active"><a class="nav-link"
-					href="${pageContext.request.contextPath}/">Home <span
-						class="sr-only">(current)</span></a></li>
+				<li class="nav-item disabled"><a class="nav-link"
+					href="${pageContext.request.contextPath}/">Home , <security:authentication
+							property="principal.username" />
+				</a></li>
 
 
 				<li class="nav-item"><a class="nav-link"
@@ -34,14 +34,11 @@
 						Transactions</a></li>
 
 
-				<li class="nav-item disabled"><a class="nav-link"
-					href="${pageContext.request.contextPath}/">Logged in as, <security:authentication
-							property="principal.username" />
-				</a></li>
+
 				<li class="nav-item"><form:form
 						action="${pageContext.request.contextPath}/logout" method="POST">
 						<a onclick="this.closest('form').submit();return false;"
-							value="Logout" class="nav-link">LOG OUT</a>
+							class="nav-link">LOG OUT</a>
 					</form:form></li>
 			</ul>
 

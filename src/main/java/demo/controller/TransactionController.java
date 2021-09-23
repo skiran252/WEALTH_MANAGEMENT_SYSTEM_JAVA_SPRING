@@ -1,6 +1,5 @@
 package demo.controller;
 
-import java.io.Serializable;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
@@ -18,15 +17,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import demo.dao.CategoryDao;
 import demo.dao.TransactionDao;
-import demo.dao.UserDaoImpl;
+import demo.dao.UserDao;
 import demo.model.Category;
 import demo.model.Transaction;
+import demo.model.User;
 
 @Controller
 public class TransactionController {
 
 	@Autowired
-	public UserDaoImpl userDao;
+	public UserDao userDao;
 
 	@Autowired
 	public CategoryDao categoryDao;
@@ -36,11 +36,10 @@ public class TransactionController {
 
 	@Transactional
 	@GetMapping("/addtransaction")
-	public ModelAndView addTransaction(Principal principal, HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView("transactionpage");
+	public ModelAndView addTransaction(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView("add_transaction");
 		List<Category> categories = categoryDao.findAll();
 		Transaction t = new Transaction();
-		t.setUser(userDao.findUser(principal.getName()));
 		mav.addObject("transaction", t);
 		mav.addObject("categories", categories);
 		return mav;
@@ -50,10 +49,12 @@ public class TransactionController {
 	@PostMapping("/addtransaction")
 	public ModelAndView addTransactionDB(Principal principal, @ModelAttribute Transaction transaction,
 			HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView("home");
+		ModelAndView mav = new ModelAndView("dashboard");
 
 		Date date = new Date();
-		transaction.setUser(userDao.findUser(principal.getName()));
+		User currentUser = userDao.findUserById(principal.getName());
+		System.out.println(currentUser);
+		transaction.setUser(userDao.findUserById(principal.getName()));
 		transaction.setTransactionDate(date);
 		int category_id = Integer.parseInt(transaction.getCategory_name());
 		transaction.setCategory(categoryDao.findCategoryById(category_id));
@@ -70,8 +71,11 @@ public class TransactionController {
 	@GetMapping("/transactions")
 	public ModelAndView showTransactions(Principal principal, HttpServletRequest request,
 			HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView("transactionsviewer");
-		List<Transaction> transactions = transactionDao.findByUser(userDao.findUser(principal.getName()));
+		ModelAndView mav = new ModelAndView("transactions");
+		System.out.println(principal.getName());
+		User currentUser = userDao.findUserById(principal.getName());
+		System.out.println(currentUser);
+		List<Transaction> transactions = transactionDao.findTransactionsByUser(currentUser);
 		mav.addObject("transactions", transactions);
 		return mav;
 	}
