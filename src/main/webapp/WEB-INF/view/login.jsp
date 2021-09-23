@@ -35,11 +35,6 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-lg-10 col-xl-7 mx-auto">
-
-
-
-
-
 								<h3 class="display-4">Wealth Management System</h3>
 
 								<p class="text-muted mb-4">Please Sign In below</p>
@@ -94,6 +89,7 @@
 										in</button>
 
 								</form:form>
+								<p>Not registered? Click <a href="${pageContext.request.contextPath}/register"> here </a> to register</p>
 							</div>
 						</div>
 					</div>

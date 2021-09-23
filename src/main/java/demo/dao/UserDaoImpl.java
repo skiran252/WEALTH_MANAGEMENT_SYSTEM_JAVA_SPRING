@@ -1,18 +1,18 @@
 package demo.dao;
 
-import java.util.Arrays;
 import java.util.List;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import demo.model.User;
 
-@Service
+@Repository
 public class UserDaoImpl implements UserDao {
 
 	@Autowired
@@ -37,11 +37,16 @@ public class UserDaoImpl implements UserDao {
 			return 0;
 		}
 
-		
 	}
 
 	public User findUser(String username) {
-		return sessionFactory.getCurrentSession().find(User.class, username);
+		Session session;
+		try {
+			session = sessionFactory.getCurrentSession();
+		} catch (HibernateException e) {
+			session = sessionFactory.openSession();
+		}
+		return session.get(User.class, username);
 	}
 
 	public List<User> list() {

@@ -114,7 +114,7 @@
 									<div class="text-center d-flex justify-content-between mt-4">
 									</div>
 								</form:form>
-
+								<p>Already registered? Click <a href="${pageContext.request.contextPath}/signin"> here </a> to login</p>
 							</div>
 						</div>
 					</div>

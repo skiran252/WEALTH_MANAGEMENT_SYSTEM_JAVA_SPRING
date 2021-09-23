@@ -1,7 +1,5 @@
 package demo.controller;
 
-import demo.model.Authority;
-import demo.dao.AuthorityDaoimpl;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import demo.dao.AuthorityDaoimpl;
 import demo.dao.UserDaoImpl;
+import demo.model.Authority;
 import demo.model.User;
 
 @Controller
@@ -40,7 +40,7 @@ public class UserController {
 		mav.addObject("user", new User());
 		return mav;
 	}
-
+	
 	@Transactional
 	@RequestMapping(value = "/register/save", method = RequestMethod.POST)
 	public ModelAndView registerUser(HttpServletRequest request, HttpServletResponse response,

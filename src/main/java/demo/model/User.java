@@ -1,11 +1,16 @@
 package demo.model;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User {
 
 	@Id
@@ -16,6 +21,9 @@ public class User {
 	private double balance;
 	private int enabled = 1;
 	private String email;
+
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	private Set<Transaction> transactions;
 
 	public String getUsername() {
 		return username;

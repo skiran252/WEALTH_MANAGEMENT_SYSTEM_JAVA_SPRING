@@ -74,15 +74,12 @@ public class ApplicationConfig implements WebMvcConfigurer {
 		sessionFactory.setDataSource(securityDataSource());
 		sessionFactory.setPackagesToScan(env.getProperty("hibernate.packagesToScan"));
 		sessionFactory.setHibernateProperties(getHibernateProperties());
-		
 		return sessionFactory;
 	}
 
 	@Bean
 	@Autowired
 	public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
-		// setup transaction manager based on session factory
-		System.out.println(sessionFactory.toString());
 		HibernateTransactionManager txManager = new HibernateTransactionManager();
 		txManager.setSessionFactory(sessionFactory);
 		return txManager;
